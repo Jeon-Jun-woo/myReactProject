@@ -11,10 +11,10 @@ import com.sist.web.entity.Gocamping;
 public interface GocampingDAO extends JpaRepository<Gocamping, Integer>{
 	@Query(value = "SELECT * FROM gocamping "
 			+"WHERE loc LIKE CONCAT('%',:loc,'%') "
-			+"ORDER BY mno ASC LIMIT :start,12",nativeQuery = true)
+			+"ORDER BY mno ASC LIMIT :start,9",nativeQuery = true)
 	public List<Gocamping> campFindData(@Param("start") Integer start,@Param("loc") String loc);
 	
-	@Query(value = "SELECT CEIL(COUNT(*)/12.0) FROM gocamping "
+	@Query(value = "SELECT CEIL(COUNT(*)/9.0) FROM gocamping "
 			+"WHERE loc LIKE CONCAT('%',:loc,'%')",nativeQuery = true)
 	public int campFindTotalPage(@Param("loc") String loc);
 	

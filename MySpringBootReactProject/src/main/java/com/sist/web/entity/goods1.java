@@ -3,6 +3,7 @@ package com.sist.web.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /*
@@ -14,14 +15,15 @@ SELLING_PRICE int
 ORIGINAL_PRICE int 
 MILEAGE int 
 BRAND text 
-DELIVERY_PRICE text 
+DELIVERY_PRICE text     
 AFTER_SERVICE text 
 DETAIL_POSTER text 
 HIT int
  */
-@Entity
+@Entity(name = "goods2")
 @Getter
 @Setter
+@NoArgsConstructor
 public class goods1 {
 	@Id
 	private int gno;

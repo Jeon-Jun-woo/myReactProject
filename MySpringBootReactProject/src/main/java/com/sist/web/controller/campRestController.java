@@ -23,7 +23,7 @@ public class campRestController {
 	   @RequestMapping("/camp/find_react")
 	   public Map camp_find(int page,String loc)
 	   {
-		   int rowSize=12;
+		   int rowSize=9;
 		   int start=(rowSize*page)-rowSize;
 		   List<Gocamping> list=dao.campFindData(start, loc);
 		   Map map=new HashMap();

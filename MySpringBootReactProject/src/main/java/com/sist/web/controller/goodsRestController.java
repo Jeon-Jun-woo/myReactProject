@@ -41,4 +41,14 @@ public class goodsRestController {
 		   
 		   return map;
 	   }
+	
+	@GetMapping("/goods/detail_react")
+	public goods1 goods_detail(int gno)
+	{
+		goods1 goods=dao.findByGno(gno);
+		goods.setHit(goods.getHit()+1); //조회수 증가
+		dao.save(goods);
+		goods=dao.findByGno(gno);
+		return goods;
+	}
 }
