@@ -1,5 +1,8 @@
 package com.sist.web.manager;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Component;
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -8,24 +11,26 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.*;
+import com.sist.web.entity.*;
 @Component
 public class NewsManager {
-	public static String newsFindData(String fd)
-	{
-		String result="";
-		String clientId = "xK1g9hlsY0sWdmLlDhwa"; //애플리케이션 클라이언트 아이디
+	public List<NewsVO> newsFind(String fd) {
+    	System.out.println(fd);
+        String clientId = "xK1g9hlsY0sWdmLlDhwa"; //애플리케이션 클라이언트 아이디
         String clientSecret = "PnB_CmHIo8"; //애플리케이션 클라이언트 시크릿
 
 
         String text = null;
         try {
             text = URLEncoder.encode(fd, "UTF-8");
+            System.out.println(text);
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("검색어 인코딩 실패",e);
         }
 
 
-        String apiURL = "https://openapi.naver.com/v1/search/blog?display=50&query=" + text;    // JSON 결과
+        String apiURL = "https://openapi.naver.com/v1/search/news.json?query=" + text;    // JSON 결과
         //String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text; // XML 결과
 
 
@@ -33,13 +38,30 @@ public class NewsManager {
         requestHeaders.put("X-Naver-Client-Id", clientId);
         requestHeaders.put("X-Naver-Client-Secret", clientSecret);
         String responseBody = get(apiURL,requestHeaders);
-        
-
         System.out.println(responseBody);
-        result=responseBody;
-		return result;
-	}
-	private static String get(String apiUrl, Map<String, String> requestHeaders){
+        List<NewsVO> list=new ArrayList<NewsVO>();
+        try
+        {
+        	JSONParser jp=new JSONParser();
+        	JSONObject root=(JSONObject)jp.parse(responseBody);// {} []
+        	JSONArray arr=(JSONArray)root.get("items");
+        	
+        	for(int i=0;i<arr.size();i++)
+        	{
+        		JSONObject obj=(JSONObject)arr.get(i);
+        		NewsVO vo=new NewsVO();
+        		vo.setTitle((String)obj.get("title"));
+        		vo.setLink((String)obj.get("link"));
+        		vo.setDesc((String)obj.get("description"));
+        		list.add(vo);
+        	}
+        	
+        }catch(Exception ex){}
+        return list;
+    }
+
+
+    private static String get(String apiUrl, Map<String, String> requestHeaders){
         HttpURLConnection con = connect(apiUrl);
         try {
             con.setRequestMethod("GET");

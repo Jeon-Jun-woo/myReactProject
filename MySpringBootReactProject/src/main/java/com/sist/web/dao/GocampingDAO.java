@@ -18,6 +18,10 @@ public interface GocampingDAO extends JpaRepository<Gocamping, Integer>{
 			+"WHERE loc LIKE CONCAT('%',:loc,'%')",nativeQuery = true)
 	public int campFindTotalPage(@Param("loc") String loc);
 	
+	@Query(value = "SELECT COUNT(*) FROM gocamping "
+			+"WHERE loc LIKE CONCAT('%',:loc,'%')",nativeQuery = true)
+	public int campFindCount(@Param("loc") String loc);
+	
 	public Gocamping findByMno(int mno);
 	
 	

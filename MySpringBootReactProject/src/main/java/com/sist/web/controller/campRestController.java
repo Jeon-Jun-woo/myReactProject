@@ -25,20 +25,13 @@ public class campRestController {
 	   {
 		   int rowSize=9;
 		   int start=(rowSize*page)-rowSize;
+		   int count=dao.campFindCount(loc);
 		   List<Gocamping> list=dao.campFindData(start, loc);
 		   Map map=new HashMap();
-		   int totalpage=dao.campFindTotalPage(loc);
-		   final int BLOCK=10;
-		   int startPage=((page-1)/BLOCK*BLOCK)+1;
-		   int endPage=((page-1)/BLOCK*BLOCK)+BLOCK;
-		   if(endPage>totalpage)
-			   endPage=totalpage;
 		   
 		   map.put("curpage",page);
-		   map.put("totalpage",totalpage);
-		   map.put("startPage",startPage);
-		   map.put("endPage", endPage);
 		   map.put("list", list);
+		   map.put("count", count);
 		   return map;
 	   }
 	   @GetMapping("/camp/list_react")

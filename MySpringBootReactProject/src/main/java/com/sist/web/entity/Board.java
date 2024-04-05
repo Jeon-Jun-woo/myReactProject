@@ -12,17 +12,19 @@ hit int
  */
 import java.util.*;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
+@DynamicUpdate
+@Data
 public class Board {
 	@Id
 	private int no;

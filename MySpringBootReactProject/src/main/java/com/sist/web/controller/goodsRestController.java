@@ -19,23 +19,14 @@ public class goodsRestController {
 	@GetMapping("/goods/list_react")
 	   public Map goodsListData(int page)
 	   {
-		   int rowSize=12;
+		   int rowSize=6;
 		   int start=(rowSize*page)-rowSize;
 		   List<goods1> list=dao.goodsListData(start);
 		   
 		   Map map=new HashMap();
 		   int count=(int)dao.count();
-		   int totalpage=(int)(Math.ceil(count/12.0));
-		   final int BLOCK=10;
-		   int startPage=((page-1)/BLOCK*BLOCK)+1;
-		   int endPage=((page-1)/BLOCK*BLOCK)+BLOCK;
-		   if(endPage>totalpage)
-			   endPage=totalpage;
-		   
+
 		   map.put("curpage",page);
-		   map.put("totalpage",totalpage);
-		   map.put("startPage",startPage);
-		   map.put("endPage", endPage);
 		   map.put("count", count);
 		   map.put("list", list);
 		   
